@@ -47,12 +47,21 @@ console.log((5 === 5 && 3 > 1) || 5); // true
 // }
 // console.log(hamburger || cola || fries === 3 || nuggets); // 2
 
-let hamburger;
-const fries = NaN;
-const cola = 0;
-const nuggets = 2;
+// let hamburger;
+// const fries = NaN;
+// const cola = 0;
+// const nuggets = 2;
 
-if ((hamburger && cola) || (fries === 3 && nuggets)) {
-  console.log('Done!'); // No
+// if ((hamburger && cola) || (fries === 3 && nuggets)) {
+//   console.log('Done!'); // No
+// }
+// console.log((hamburger && cola) || (fries === 3 && nuggets)); //false
+let figure = '';
+for (let i = 1; i < 6; i++) {
+  for (let j = 1; j < 6; j++) {
+    figure = figure + '*';
+  }
+  figure = figure + '\n';
 }
-console.log((hamburger && cola) || (fries === 3 && nuggets)); //false
+
+console.log(figure);
