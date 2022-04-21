@@ -22,4 +22,41 @@
 Проверить, чтобы все работало без ошибок в консоли */
 
 'use strict';
+const form = document.getElementById('form');
+const addBtn = document.getElementById('addBtn');
+const showBtn = document.getElementById('showBtn');
 
+// const numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?');
+
+const personalMovieDB = {
+  count: 0,
+  movies: {},
+  actors: {},
+  genres: [],
+  privat: false,
+};
+
+function addNewMovie() {
+  const movie = prompt('Один из последних просмотренных фильмов?');
+  const rating = prompt('На сколько оцените его?');
+  personalMovieDB.movies[movie] = rating;
+}
+
+addBtn.addEventListener('click', addNewMovie);
+showBtn.addEventListener('click', () => {
+  console.log(personalMovieDB);
+});
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const numberOfFilms = new FormData(e.target).get('movieSum');
+  personalMovieDB.count = numberOfFilms;
+});
+
+// const movie1 = prompt('Один из последних просмотренных фильмов?');
+// const rating1 = prompt('На сколько оцените его?');
+// const movie2 = prompt('Один из последних просмотренных фильмов?');
+// const rating2 = prompt('На сколько оцените его?');
+
+// personalMovieDB.movies[movie1] = rating1;
+// personalMovieDB.movies[movie2] = rating2;
