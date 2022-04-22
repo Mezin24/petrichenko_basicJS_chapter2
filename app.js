@@ -58,10 +58,75 @@ console.log((5 === 5 && 3 > 1) || 5); // true
 // console.log((hamburger && cola) || (fries === 3 && nuggets)); //false
 let figure = '';
 for (let i = 1; i < 6; i++) {
-  for (let j = 1; j < 6; j++) {
-    figure = figure + '*';
+  for (let j = 1; j < i; j++) {
+    figure += '*';
   }
-  figure = figure + '\n';
+  figure += '\n';
+}
+// let figure = '';
+// for (let i = 1; i < 6; i++) {
+//   for (let j = 1; j < 6; j++) {
+//     if (i === j) {
+//       figure = figure + '*'.repeat(i) + '\n';
+//     }
+//   }
+// }
+
+// console.log(figure);
+
+function firstTask() {
+  for (let i = 5; i <= 10; i++) {
+    console.log(i);
+  }
+}
+firstTask();
+
+function secondTask() {
+  for (let i = 20; i >= 10; i--) {
+    if (i === 13) {
+      return;
+    }
+    console.log(i);
+  }
+}
+secondTask();
+
+function thirdTask() {
+  for (let i = 1; i <= 10; i++) {
+    if (i % 2 === 0) {
+      console.log(i);
+    }
+  }
 }
 
-console.log(figure);
+thirdTask();
+
+for (let i = 2; i <= 16; i++) {
+  if (i % 2 === 0) {
+    continue;
+  } else {
+    console.log(i);
+  }
+}
+
+function fourthTask() {
+  let i = 2;
+  while (i <= 16) {
+    if (i % 2 !== 0) {
+      console.log(i);
+    }
+    i++;
+  }
+}
+fourthTask();
+
+function fifthTask() {
+  const arrayOfNumbers = [];
+
+  for (let i = 5; i <= 10; i++) {
+    arrayOfNumbers.push(i);
+  }
+
+  return arrayOfNumbers;
+}
+fifthTask();
