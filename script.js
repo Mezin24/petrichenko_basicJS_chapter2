@@ -20,6 +20,7 @@
     }
 
 Проверить, чтобы все работало без ошибок в консоли */
+//////////////////////////////////////////////////////////////////
 
 /* Задание на урок:
 
@@ -36,14 +37,27 @@
 4) Потренироваться и переписать цикл еще двумя способами*/
 
 // Код возьмите из предыдущего домашнего задания
+//////////////////////////////////////////////////////////////////
+
+/* Задание на урок:
+
+1) Первую часть задания повторить по уроку
+
+2) Создать функцию showMyDB, которая будет проверять свойство privat. Если стоит в позиции
+false - выводит в консоль главный объект программы
+
+3) Создать функцию writeYourGenres в которой пользователь будет 3 раза отвечать на вопрос 
+"Ваш любимый жанр под номером ${номер по порядку}". Каждый ответ записывается в массив данных
+genres
+
+P.S. Функции вызывать не обязательно*/
 
 'use strict';
 const form = document.getElementById('form');
 const addBtn = document.getElementById('addBtn');
 const showBtn = document.getElementById('showBtn');
+const addGenreBtn = document.getElementById('addGenreBtn');
 const msg = document.getElementById('msg');
-
-// const numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?');
 
 const personalMovieDB = {
   count: 0,
@@ -52,6 +66,24 @@ const personalMovieDB = {
   genres: [],
   privat: false,
 };
+
+function showMyDB(db) {
+  if (db.private === false) {
+    console.log(db);
+  }
+}
+
+function writeYourGenres(db) {
+  for (let i = 1; i <= 3; i++) {
+    const genre = prompt(`Ваш любимый жанр под номером ${i}`);
+    if (genre === null || genre === undefined || genre.trim() === '') {
+      alert('Введите корректные данные');
+      i--;
+    } else {
+      db.genres[i - 1] = genre;
+    }
+  }
+}
 
 function addNewMovie() {
   let i = 0;
@@ -73,24 +105,6 @@ function addNewMovie() {
     i++;
   }
 }
-//   for (let i = 0; i < 2; i++) {
-//     const movie = prompt('Один из последних просмотренных фильмов?');
-//     const rating = prompt('На сколько оцените его?');
-//     if (
-//       movie?.trim() === '' ||
-//       rating?.trim() === '' ||
-//       rating === null ||
-//       movie === null ||
-//       movie.length >= 10
-//     ) {
-//       alert('Invalid Value, repeat please.');
-//       i--;
-//       continue;
-//     }
-
-//     personalMovieDB.movies[movie] = rating;
-//   }
-// }
 
 addBtn.addEventListener('click', addNewMovie);
 showBtn.addEventListener('click', () => {
@@ -100,7 +114,16 @@ showBtn.addEventListener('click', () => {
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const numberOfFilms = new FormData(e.target).get('movieSum');
-  personalMovieDB.count = +numberOfFilms;
+  if (
+    numberOfFilms !== null ||
+    numberOfFilms !== undefined ||
+    numberOfFilms.trim() === ''
+  ) {
+    personalMovieDB.count = undefined;
+    console.log(personalMovieDB.count);
+  } else {
+    personalMovieDB.count = +numberOfFilms;
+  }
 
   let message;
 
@@ -117,10 +140,4 @@ form.addEventListener('submit', (e) => {
   msg.textContent = message;
 });
 
-// const movie1 = prompt('Один из последних просмотренных фильмов?');
-// const rating1 = prompt('На сколько оцените его?');
-// const movie2 = prompt('Один из последних просмотренных фильмов?');
-// const rating2 = prompt('На сколько оцените его?');
-
-// personalMovieDB.movies[movie1] = rating1;
-// personalMovieDB.movies[movie2] = rating2;
+addGenreBtn.addEventListener('click', () => writeYourGenres(personalMovieDB));
