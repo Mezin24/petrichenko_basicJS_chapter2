@@ -72,6 +72,7 @@ const form = document.getElementById('form');
 const addBtn = document.getElementById('addBtn');
 const showBtn = document.getElementById('showBtn');
 const addGenreBtn = document.getElementById('addGenreBtn');
+const privateToggleBtn = document.getElementById('privateToggleBtn');
 const msg = document.getElementById('msg');
 
 const personalMovieDB = {
@@ -83,70 +84,70 @@ const personalMovieDB = {
   toggleVisibleMyDB() {
     this.privat = !this.privat;
   },
+  showMyDB() {
+    if (this.privat === false) {
+      console.log(this);
+    } else {
+      console.log('This is a private database');
+    }
+  },
+  writeYourGenres() {
+    for (let i = 1; i <= 3; i++) {
+      const genre = prompt(`Ваш любимый жанр под номером ${i}`);
+      if (genre === null || genre === undefined || genre.trim() === '') {
+        alert('Введите корректные данные');
+        i--;
+      } else {
+        this.genres[i - 1] = genre;
+      }
+    }
+    this.genres.forEach((genre, i) =>
+      console.log(`Любимый жанр #${i + 1} - это ${genre}"`)
+    );
+  },
+  addNewMovie() {
+    let i = 0;
+    while (i < 2) {
+      const movie = prompt('Один из последних просмотренных фильмов?');
+      const rating = prompt('На сколько оцените его?');
+      if (
+        movie?.trim() === '' ||
+        rating?.trim() === '' ||
+        rating === null ||
+        movie === null ||
+        movie.length >= 10
+      ) {
+        alert('Invalid Value, repeat please.');
+        continue;
+      }
+      console.log(this);
+      this.movies[movie] = rating;
+      i++;
+    }
+  },
 };
 
-function showMyDB(db) {
-  if (db.privat === false) {
-    console.log(db);
-  } else {
-    console.log('This is a private database');
-  }
-}
-
-function writeYourGenres(db) {
-  for (let i = 1; i <= 3; i++) {
-    const genre = prompt(`Ваш любимый жанр под номером ${i}`);
-    if (genre === null || genre === undefined || genre.trim() === '') {
-      alert('Введите корректные данные');
-      i--;
-    } else {
-      db.genres[i - 1] = genre;
-    }
-  }
-  db.genres.forEach((genre, i) =>
-    console.log(`Любимый жанр #${i + 1} - это ${genre}"`)
-  );
-}
-
-function addNewMovie() {
-  let i = 0;
-  while (i < 2) {
-    const movie = prompt('Один из последних просмотренных фильмов?');
-    const rating = prompt('На сколько оцените его?');
-    if (
-      movie?.trim() === '' ||
-      rating?.trim() === '' ||
-      rating === null ||
-      movie === null ||
-      movie.length >= 10
-    ) {
-      alert('Invalid Value, repeat please.');
-      continue;
-    }
-
-    personalMovieDB.movies[movie] = rating;
-    i++;
-  }
-}
-
-addBtn.addEventListener('click', addNewMovie);
+addBtn.addEventListener(
+  'click',
+  personalMovieDB.addNewMovie.bind(personalMovieDB)
+);
 showBtn.addEventListener('click', () => {
-  console.log(showMyDB(personalMovieDB));
+  personalMovieDB.showMyDB.call(personalMovieDB);
 });
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const numberOfFilms = new FormData(e.target).get('movieSum');
+
   if (
-    numberOfFilms !== null ||
-    numberOfFilms !== undefined ||
+    numberOfFilms === null ||
+    numberOfFilms === undefined ||
     numberOfFilms.trim() === ''
   ) {
     personalMovieDB.count = undefined;
   } else {
     personalMovieDB.count = +numberOfFilms;
   }
-
   let message;
 
   if (personalMovieDB.count < 10) {
@@ -162,4 +163,8 @@ form.addEventListener('submit', (e) => {
   msg.textContent = message;
 });
 
-addGenreBtn.addEventListener('click', () => writeYourGenres(personalMovieDB));
+addGenreBtn.addEventListener('click', () => personalMovieDB.writeYourGenres());
+privateToggleBtn.addEventListener(
+  'click',
+  personalMovieDB.toggleVisibleMyDB.bind(personalMovieDB)
+);
