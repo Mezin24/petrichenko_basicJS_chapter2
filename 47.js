@@ -33,3 +33,11 @@ let students = {
     pro: [{ name: 'Sam', progress: 10 }],
   },
 };
+
+function calcProgress(students) {
+  let sum = 0;
+
+  return sum;
+}
+
+console.log(calcProgress(students));
