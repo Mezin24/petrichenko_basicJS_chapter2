@@ -124,7 +124,7 @@ console.log(sum(0)(1)(2)(3)(4)(5));
 
 function sum(num) {
   function f(num2) {
-    f.count + num2;
+    f.count += num2;
     return f;
   }
 
