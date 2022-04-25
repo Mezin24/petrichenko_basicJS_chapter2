@@ -9,7 +9,7 @@ const students = [
   'Sandra',
   'Cris',
   'Bernard',
-  // 'Takesi',
+  'Takesi',
   'Sam',
 ];
 
