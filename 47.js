@@ -37,6 +37,7 @@ let students = {
 function calcProgress(students) {
   let sum = 0;
 
+  console.log(Object.values(students));
   return sum;
 }
 
