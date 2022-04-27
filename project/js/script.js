@@ -39,17 +39,70 @@ promoBgEl.style.backgroundSize = '100%';
 
 //////////////////// 4 /////////////////////////////
 const movieListEl = document.querySelector('.promo__interactive-list');
-movieDB.movies.sort();
-const { movies } = movieDB;
 
-const html = movies
-  .map((movie, i) => {
-    return `
-        <li class="promo__interactive-item">${i + 1}: ${movie}
+function displayMovies(db) {
+  const sortedDb = db.map((item) => item.toLowerCase()).sort();
+
+  const html = sortedDb
+    .map((movie, i) => {
+      return `
+        <li class="promo__interactive-item" data-id="${movie.slice(0, 10)}">${
+        i + 1
+      }: ${movie}
             <div class="delete"></div>
         </li>
     `;
-  })
-  .join('');
+    })
+    .join('');
 
-movieListEl.innerHTML = html;
+  movieListEl.innerHTML = html;
+}
+displayMovies(movieDB.movies);
+
+/* Задания на урок:
+
+1) Реализовать функционал, что после заполнения формы и нажатия кнопки "Подтвердить" - 
+новый фильм добавляется в список. Страница не должна перезагружаться.
+Новый фильм должен добавляться в movieDB.movies.
+Для получения доступа к значению input - обращаемся к нему как input.value;
+P.S. Здесь есть несколько вариантов решения задачи, принимается любой, но рабочий.
+
+2) Если название фильма больше, чем 21 символ - обрезать его и добавить три точки
+
+3) При клике на мусорную корзину - элемент будет удаляться из списка (сложно)
+
+4) Если в форме стоит галочка "Сделать любимым" - в консоль вывести сообщение: 
+"Добавляем любимый фильм"
+
+5) Фильмы должны быть отсортированы по алфавиту */
+
+const form = document.querySelector('.add');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+  let filmName = formData.get('name');
+  filmName = filmName.length >= 21 ? filmName.slice(0, 21) + '...' : filmName;
+
+  const isFavorite = formData.get('isFavorite');
+  if (isFavorite === 'on') {
+    filmName = '⭐ ' + filmName;
+    console.log('Добавляем любимый фильм');
+  }
+
+  movieDB.movies.push(filmName);
+  displayMovies(movieDB.movies);
+  form.querySelector('input[type="text"]').value = '';
+});
+
+movieListEl.addEventListener('click', (e) => {
+  if (e.target.classList.contains('delete')) {
+    const currentMovieId = e.target.closest('li').dataset.id;
+    const deleteMovieIndex = movieDB.movies.findIndex(
+      (item) => item.toLowerCase().slice(0, 10) === currentMovieId
+    );
+    movieDB.movies.splice(deleteMovieIndex, 1);
+    displayMovies(movieDB.movies);
+  }
+});
