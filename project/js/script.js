@@ -83,6 +83,11 @@ form.addEventListener('submit', (e) => {
 
   const formData = new FormData(e.target);
   let filmName = formData.get('name');
+
+  if (filmName.trim().length === 0) {
+    return;
+  }
+
   filmName = filmName.length >= 21 ? filmName.slice(0, 21) + '...' : filmName;
 
   const isFavorite = formData.get('isFavorite');
@@ -93,7 +98,7 @@ form.addEventListener('submit', (e) => {
 
   movieDB.movies.push(filmName);
   displayMovies(movieDB.movies);
-  form.querySelector('input[type="text"]').value = '';
+  e.target.reset();
 });
 
 movieListEl.addEventListener('click', (e) => {
